@@ -36,16 +36,16 @@ namespace GameLauncher
                 switch (_status)
                 {
                     case LauncherStatus.ready:
-                        PlayButton.Content = "Play";
+                        PlayButton.Content = "Jugar";
                         break;
                     case LauncherStatus.failed:
-                        PlayButton.Content = "Update Failed - Retry";
+                        PlayButton.Content = "Actualización fallida - Reintentar";
                         break;
                     case LauncherStatus.downloadingGame:
-                        PlayButton.Content = "Downloading Game";
+                        PlayButton.Content = "Descargando juego...";
                         break;
                     case LauncherStatus.downloadingUpdate:
-                        PlayButton.Content = "Downloading Update";
+                        PlayButton.Content = "Descargando actualización...";
                         break;
                     default:
                         break;
@@ -59,8 +59,8 @@ namespace GameLauncher
 
             rootPath = Directory.GetCurrentDirectory();
             versionFile = Path.Combine(rootPath, "Version.txt");
-            gameZip = Path.Combine(rootPath, "Build.zip");
-            gameExe = Path.Combine(rootPath, "Build", "Pirate Game.exe");
+            gameZip = Path.Combine(rootPath, "LethalCompany.zip");
+            gameExe = Path.Combine(rootPath, "LethalCompany", "Lethal Company.exe");
         }
 
         private void CheckForUpdates()
@@ -73,7 +73,7 @@ namespace GameLauncher
                 try
                 {
                     WebClient webClient = new WebClient();
-                    Version onlineVersion = new Version(webClient.DownloadString("https://drive.google.com/uc?export=download&id=1R3GT_VINzmNoXKtvnvuJw6C86-k3Jr5s"));
+                    Version onlineVersion = new Version(webClient.DownloadString("https://www.dropbox.com/scl/fi/vkx2n7wmtckh37u2wykzc/Version.txt?rlkey=t3j39favuh4v990f8wdufwkrz&dl=1"));
 
                     if (onlineVersion.IsDifferentThan(localVersion))
                     {
@@ -87,7 +87,7 @@ namespace GameLauncher
                 catch (Exception ex)
                 {
                     Status = LauncherStatus.failed;
-                    MessageBox.Show($"Error checking for game updates: {ex}");
+                    MessageBox.Show($"Error al buscar actualizaciones: {ex}");
                 }
             }
             else
@@ -108,16 +108,16 @@ namespace GameLauncher
                 else
                 {
                     Status = LauncherStatus.downloadingGame;
-                    _onlineVersion = new Version(webClient.DownloadString("https://drive.google.com/uc?export=download&id=1R3GT_VINzmNoXKtvnvuJw6C86-k3Jr5s"));
+                    _onlineVersion = new Version(webClient.DownloadString("https://www.dropbox.com/scl/fi/vkx2n7wmtckh37u2wykzc/Version.txt?rlkey=t3j39favuh4v990f8wdufwkrz&dl=1"));
                 }
 
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
-                webClient.DownloadFileAsync(new Uri("https://drive.google.com/uc?export=download&id=1SNA_3P5wVp4tZi5NKhiGAAD6q4ilbaaf"), gameZip, _onlineVersion);
+                webClient.DownloadFileAsync(new Uri("https://www.dropbox.com/scl/fi/qu8dhv83y9c43u5pcglnc/LethalCompany.zip?rlkey=8mhazdw9x7jp4qnih889n1y5f&dl=1"), gameZip, _onlineVersion);
             }
             catch (Exception ex)
             {
                 Status = LauncherStatus.failed;
-                MessageBox.Show($"Error installing game files: {ex}");
+                MessageBox.Show($"Error al instalar el cliente: {ex}");
             }
         }
 
@@ -137,7 +137,7 @@ namespace GameLauncher
             catch (Exception ex)
             {
                 Status = LauncherStatus.failed;
-                MessageBox.Show($"Error finishing download: {ex}");
+                MessageBox.Show($"Error al descargar archivos: {ex}");
             }
         }
 
@@ -151,7 +151,7 @@ namespace GameLauncher
             if (File.Exists(gameExe) && Status == LauncherStatus.ready)
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo(gameExe);
-                startInfo.WorkingDirectory = Path.Combine(rootPath, "Build");
+                startInfo.WorkingDirectory = Path.Combine(rootPath, "LethalCompany");
                 Process.Start(startInfo);
 
                 Close();
