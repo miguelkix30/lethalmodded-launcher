@@ -73,7 +73,7 @@ namespace GameLauncher
                 try
                 {
                     WebClient webClient = new WebClient();
-                    Version onlineVersion = new Version(webClient.DownloadString("https://www.dropbox.com/scl/fi/vkx2n7wmtckh37u2wykzc/Version.txt?rlkey=t3j39favuh4v990f8wdufwkrz&dl=1"));
+                    Version onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/lethalmoddedversion"));
 
                     if (onlineVersion.IsDifferentThan(localVersion))
                     {
@@ -108,11 +108,11 @@ namespace GameLauncher
                 else
                 {
                     Status = LauncherStatus.downloadingGame;
-                    _onlineVersion = new Version(webClient.DownloadString("https://www.dropbox.com/scl/fi/vkx2n7wmtckh37u2wykzc/Version.txt?rlkey=t3j39favuh4v990f8wdufwkrz&dl=1"));
+                    _onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/lethalmoddedversion"));
                 }
 
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
-                webClient.DownloadFileAsync(new Uri("https://www.dropbox.com/scl/fi/qu8dhv83y9c43u5pcglnc/LethalCompany.zip?rlkey=8mhazdw9x7jp4qnih889n1y5f&dl=1"), gameZip, _onlineVersion);
+                webClient.DownloadFileAsync(new Uri("http://tiny.cc/lethalmoddedclient"), gameZip, _onlineVersion);
             }
             catch (Exception ex)
             {

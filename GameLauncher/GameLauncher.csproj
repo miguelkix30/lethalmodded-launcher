@@ -8,9 +8,19 @@
     <AssemblyName>Lethal Modded Launcher - MiguelkiNetwork</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="images\Icon.ico" />
     <None Remove="images\LauncherBackground.png" />
+    <None Remove="images\lethalcompany.png" />
+    <None Remove="images\ParallelCircular.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +30,8 @@
   <ItemGroup>
     <Resource Include="images\Icon.ico" />
     <Resource Include="images\LauncherBackground.png" />
+    <Resource Include="images\lethalcompany.png" />
+    <Resource Include="images\ParallelCircular.png" />
   </ItemGroup>
 
 </Project>
