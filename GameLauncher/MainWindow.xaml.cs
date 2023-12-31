@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -24,6 +25,7 @@ namespace GameLauncher
         private string rootPath;
         private string versionFile;
         private string gameZip;
+        private string gameFolder;
         private string gameExe;
 
         private LauncherStatus _status;
@@ -60,6 +62,7 @@ namespace GameLauncher
             rootPath = Directory.GetCurrentDirectory();
             versionFile = Path.Combine(rootPath, "Version.txt");
             gameZip = Path.Combine(rootPath, "LethalCompany.zip");
+            gameFolder = Path.Combine(rootPath, "LethalCompany");
             gameExe = Path.Combine(rootPath, "LethalCompany", "Lethal Company.exe");
         }
 
@@ -112,7 +115,13 @@ namespace GameLauncher
                 }
 
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
+                if (Directory.Exists(gameFolder))
+                {
+                    Directory.Delete(gameFolder, true);
+                }
+
                 webClient.DownloadFileAsync(new Uri("http://tiny.cc/lethalmoddedclient"), gameZip, _onlineVersion);
+
             }
             catch (Exception ex)
             {
@@ -126,6 +135,10 @@ namespace GameLauncher
             try
             {
                 string onlineVersion = ((Version)e.UserState).ToString();
+                if (Directory.Exists(gameFolder))
+                {
+                    Directory.Delete(gameFolder, true );
+                }
                 ZipFile.ExtractToDirectory(gameZip, rootPath, true);
                 File.Delete(gameZip);
 
