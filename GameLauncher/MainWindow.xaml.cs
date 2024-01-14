@@ -61,9 +61,9 @@ namespace GameLauncher
 
             rootPath = Directory.GetCurrentDirectory();
             versionFile = Path.Combine(rootPath, "Version.txt");
-            gameZip = Path.Combine(rootPath, "LethalCompany.zip");
-            gameFolder = Path.Combine(rootPath, "LethalCompany");
-            gameExe = Path.Combine(rootPath, "LethalCompany", "Lethal Company.exe");
+            gameZip = Path.Combine(rootPath, "LethalCompanyVR.zip");
+            gameFolder = Path.Combine(rootPath, "LethalCompanyVR");
+            gameExe = Path.Combine(rootPath, "LethalCompanyVR", "Lethal Company.exe");
         }
 
         private void CheckForUpdates()
@@ -76,7 +76,7 @@ namespace GameLauncher
                 try
                 {
                     WebClient webClient = new WebClient();
-                    Version onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/lethalmoddedversion"));
+                    Version onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/lethalvrversion"));
 
                     if (onlineVersion.IsDifferentThan(localVersion))
                     {
@@ -111,7 +111,7 @@ namespace GameLauncher
                 else
                 {
                     Status = LauncherStatus.downloadingGame;
-                    _onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/lethalmoddedversion"));
+                    _onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/lethalvrversion"));
                 }
 
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
@@ -120,7 +120,7 @@ namespace GameLauncher
                     Directory.Delete(gameFolder, true);
                 }
 
-                webClient.DownloadFileAsync(new Uri("http://tiny.cc/lethalmoddedclient"), gameZip, _onlineVersion);
+                webClient.DownloadFileAsync(new Uri("http://tiny.cc/lethalvrclient"), gameZip, _onlineVersion);
 
             }
             catch (Exception ex)
@@ -164,7 +164,7 @@ namespace GameLauncher
             if (File.Exists(gameExe) && Status == LauncherStatus.ready)
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo(gameExe);
-                startInfo.WorkingDirectory = Path.Combine(rootPath, "LethalCompany");
+                startInfo.WorkingDirectory = Path.Combine(rootPath, "LethalCompanyVR");
                 Process.Start(startInfo);
 
                 Close();
