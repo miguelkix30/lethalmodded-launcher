@@ -115,12 +115,13 @@ namespace GameLauncher
                 }
 
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
+                webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChangedCallback);
                 if (Directory.Exists(gameFolder))
                 {
                     Directory.Delete(gameFolder, true);
                 }
-
-                webClient.DownloadFileAsync(new Uri("http://tiny.cc/lethalmoddedclient"), gameZip, _onlineVersion);
+                progressbar.Visibility = Visibility.Visible;
+                webClient.DownloadFileAsync(new Uri("http://tiny.cc/lethalmoddedclientv4"), gameZip, _onlineVersion);
 
             }
             catch (Exception ex)
@@ -128,6 +129,16 @@ namespace GameLauncher
                 Status = LauncherStatus.failed;
                 MessageBox.Show($"Error al instalar el cliente: {ex}");
             }
+        }
+
+        private void DownloadProgressChangedCallback(object sender, DownloadProgressChangedEventArgs e)
+        {
+            // Actualizar la barra de progreso durante la descarga
+            Dispatcher.Invoke(() =>
+            {
+                double progressPercentage = (double)e.BytesReceived / e.TotalBytesToReceive * 100;
+                progressbar.Value = progressPercentage;
+            });
         }
 
         private void DownloadGameCompletedCallback(object sender, AsyncCompletedEventArgs e)
@@ -145,6 +156,10 @@ namespace GameLauncher
                 File.WriteAllText(versionFile, onlineVersion);
 
                 VersionText.Text = onlineVersion;
+
+                progressbar.Value = 0;
+                progressbar.Visibility = Visibility.Collapsed;
+
                 Status = LauncherStatus.ready;
             }
             catch (Exception ex)

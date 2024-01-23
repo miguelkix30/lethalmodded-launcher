@@ -12,7 +12,7 @@
         <Image Stretch="UniformToFill" Source="images/LauncherBackground.png"/>
         <Image x:Name="logo" HorizontalAlignment="Left" Height="63" Margin="31,31,0,0" VerticalAlignment="Top" Width="63" Source="/images/ParallelCircular.png"/>
         <TextBlock Name="VersionText" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="20" Foreground="White" Margin="0, 0, 5, 0"/>
-        <Button Name="PlayButton" Content="Cargando..." Click="PlayButton_Click" Height="50" FontSize="28"  BorderThickness="5.0" Foreground="#DDFFFFFF" Margin="0, 0, 0, 15" VerticalAlignment="Bottom" HorizontalAlignment="Center" MinWidth="150" Padding="10,1,10,1" Background="#FF0061FF" FontFamily="Bahnschrift" BorderBrush="#FF042761">
+        <Button Name="PlayButton" Content="Cargando..." Click="PlayButton_Click" Height="50" FontSize="28"  BorderThickness="5.0" Foreground="#DDFFFFFF" Margin="0,450,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" MinWidth="150" Padding="10,1,10,1" Background="#FF0061FF" FontFamily="Bahnschrift" BorderBrush="#FF042761">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -21,6 +21,14 @@
 
         </Button>
         <Image HorizontalAlignment="Center" Height="139" Margin="0,31,0,0" VerticalAlignment="Top" Width="320" Source="/images/lethalcompany.png"/>
+        <ProgressBar x:Name="progressbar"
+             HorizontalAlignment="Stretch"
+             Height="14"
+             VerticalAlignment="Bottom"
+             Width="1080"
+             RenderTransformOrigin="0.5,2.717"
+             Foreground="#FF0061FF"
+             BorderBrush="White" Background="White" Visibility="Collapsed"/>
 
     </Grid>
 </Window>
