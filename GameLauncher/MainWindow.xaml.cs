@@ -61,9 +61,9 @@ namespace GameLauncher
 
             rootPath = Directory.GetCurrentDirectory();
             versionFile = Path.Combine(rootPath, "Version.txt");
-            gameZip = Path.Combine(rootPath, "LethalCompany.zip");
-            gameFolder = Path.Combine(rootPath, "LethalCompany");
-            gameExe = Path.Combine(rootPath, "LethalCompany", "Lethal Company.exe");
+            gameZip = Path.Combine(rootPath, "REPO-Miguelki.zip");
+            gameFolder = Path.Combine(rootPath, "REPO");
+            gameExe = Path.Combine(rootPath, "REPO-Miguelki", "REPO.exe");
         }
 
         private void CheckForUpdates()
@@ -76,7 +76,7 @@ namespace GameLauncher
                 try
                 {
                     WebClient webClient = new WebClient();
-                    Version onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/lethalmoddedversion"));
+                    Version onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/repomiguelkiversion"));
 
                     if (onlineVersion.IsDifferentThan(localVersion))
                     {
@@ -111,7 +111,7 @@ namespace GameLauncher
                 else
                 {
                     Status = LauncherStatus.downloadingGame;
-                    _onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/lethalmoddedversion"));
+                    _onlineVersion = new Version(webClient.DownloadString("http://tiny.cc/repomiguelkiversion"));
                 }
 
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
@@ -121,7 +121,7 @@ namespace GameLauncher
                     Directory.Delete(gameFolder, true);
                 }
                 progressbar.Visibility = Visibility.Visible;
-                webClient.DownloadFileAsync(new Uri("http://tiny.cc/lethalmoddedclientv4"), gameZip, _onlineVersion);
+                webClient.DownloadFileAsync(new Uri("http://tiny.cc/repomiguelkiclient"), gameZip, _onlineVersion);
 
             }
             catch (Exception ex)
@@ -179,7 +179,7 @@ namespace GameLauncher
             if (File.Exists(gameExe) && Status == LauncherStatus.ready)
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo(gameExe);
-                startInfo.WorkingDirectory = Path.Combine(rootPath, "LethalCompany");
+                startInfo.WorkingDirectory = Path.Combine(rootPath, "REPO-Miguelki");
                 Process.Start(startInfo);
 
                 Close();

@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>images\icon.ico</ApplicationIcon>
-    <AssemblyName>Lethal Modded Launcher - MiguelkiNetwork</AssemblyName>
+    <AssemblyName>REPO Modded Launcher - MiguelkiNetwork</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,8 +19,9 @@
   <ItemGroup>
     <None Remove="images\Icon.ico" />
     <None Remove="images\LauncherBackground.png" />
-    <None Remove="images\lethalcompany.png" />
-    <None Remove="images\ParallelCircular.png" />
+    <None Remove="images\RepoIcon.png" />
+    <None Remove="images\repologo.png" />
+    <None Remove="repologo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,8 +31,9 @@
   <ItemGroup>
     <Resource Include="images\Icon.ico" />
     <Resource Include="images\LauncherBackground.png" />
-    <Resource Include="images\lethalcompany.png" />
-    <Resource Include="images\ParallelCircular.png" />
+    <Resource Include="images\RepoIcon.png" />
+    <Resource Include="images\repologo.png" />
+    <Resource Include="repologo.png" />
   </ItemGroup>
 
 </Project>
