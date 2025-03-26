@@ -62,7 +62,7 @@ namespace GameLauncher
             rootPath = Directory.GetCurrentDirectory();
             versionFile = Path.Combine(rootPath, "Version.txt");
             gameZip = Path.Combine(rootPath, "REPO-Miguelki.zip");
-            gameFolder = Path.Combine(rootPath, "REPO");
+            gameFolder = Path.Combine(rootPath, "REPO-Miguelki"); // Updated to correct folder name
             gameExe = Path.Combine(rootPath, "REPO-Miguelki", "REPO.exe");
         }
 
@@ -116,18 +116,41 @@ namespace GameLauncher
 
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChangedCallback);
-                if (Directory.Exists(gameFolder))
-                {
-                    Directory.Delete(gameFolder, true);
-                }
+                
+                // Clean up any existing game folders before downloading
+                CleanupGameFolders();
+                
                 progressbar.Visibility = Visibility.Visible;
                 webClient.DownloadFileAsync(new Uri("http://tiny.cc/repomiguelkiclient"), gameZip, _onlineVersion);
-
             }
             catch (Exception ex)
             {
                 Status = LauncherStatus.failed;
                 MessageBox.Show($"Error al instalar el cliente: {ex}");
+            }
+        }
+
+        // Helper method to ensure game folders are properly cleaned up
+        private void CleanupGameFolders()
+        {
+            try
+            {
+                // Delete the main game folder if it exists
+                if (Directory.Exists(gameFolder))
+                {
+                    Directory.Delete(gameFolder, true);
+                }
+                
+                // Also check for any old REPO folder that might still exist
+                string oldGameFolder = Path.Combine(rootPath, "REPO");
+                if (Directory.Exists(oldGameFolder))
+                {
+                    Directory.Delete(oldGameFolder, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al limpiar las carpetas antiguas: {ex.Message}\nPor favor, cierre cualquier programa que pueda estar usando los archivos del juego.");
             }
         }
 
@@ -146,10 +169,10 @@ namespace GameLauncher
             try
             {
                 string onlineVersion = ((Version)e.UserState).ToString();
-                if (Directory.Exists(gameFolder))
-                {
-                    Directory.Delete(gameFolder, true );
-                }
+                
+                // Clean up again to ensure we have a fresh install
+                CleanupGameFolders();
+                
                 ZipFile.ExtractToDirectory(gameZip, rootPath, true);
                 File.Delete(gameZip);
 
