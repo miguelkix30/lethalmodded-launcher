@@ -62,7 +62,7 @@ namespace GameLauncher
             rootPath = Directory.GetCurrentDirectory();
             versionFile = Path.Combine(rootPath, "Version.txt");
             gameZip = Path.Combine(rootPath, "REPO-Miguelki.zip");
-            gameFolder = Path.Combine(rootPath, "REPO-Miguelki"); // Updated to correct folder name
+            gameFolder = Path.Combine(rootPath, "REPO-Miguelki");
             gameExe = Path.Combine(rootPath, "REPO-Miguelki", "REPO.exe");
         }
 
@@ -72,6 +72,7 @@ namespace GameLauncher
             {
                 Version localVersion = new Version(File.ReadAllText(versionFile));
                 VersionText.Text = localVersion.ToString();
+                VersionDisplayText.Text = $"V{localVersion}";
 
                 try
                 {
@@ -95,6 +96,7 @@ namespace GameLauncher
             }
             else
             {
+                VersionDisplayText.Text = "";
                 InstallGameFiles(false, Version.zero);
             }
         }
@@ -179,6 +181,7 @@ namespace GameLauncher
                 File.WriteAllText(versionFile, onlineVersion);
 
                 VersionText.Text = onlineVersion;
+                VersionDisplayText.Text = $"V{onlineVersion}";
 
                 progressbar.Value = 0;
                 progressbar.Visibility = Visibility.Collapsed;
